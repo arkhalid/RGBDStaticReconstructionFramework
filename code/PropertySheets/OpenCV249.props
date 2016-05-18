@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <OPENCV_DLL_SUFFIX Condition="'$(Configuration)'=='Debug'">249d</OPENCV_DLL_SUFFIX>
+    <OPENCV_DLL_SUFFIX Condition="'$(Configuration)'=='Release'">249</OPENCV_DLL_SUFFIX>
+    <OPENCV_PLATFORM_PATH Condition="'$(Platform)'=='x64'">x64</OPENCV_PLATFORM_PATH>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(SolutionDir)ExternalIncludes\opencv;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LibraryPath>$(SolutionDir)ExternalLibs\opencv\$(OPENCV_PLATFORM_PATH);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>$(SolutionDir)ExternalLibs\opencv\$(OPENCV_PLATFORM_PATH)\*$(OPENCV_DLL_SUFFIX).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <!--       <Command>%(Command)
+if $(OutputType) == exe (
+echo Now copying OpenCV DLLs
+xcopy /D /Q /Y "$(OPENCV_HOME)$(OPENCV_PLATFORM_PATH)\vc10\bin\*$(OPENCV_DLL_SUFFIX).dll" "$(OutDir)" >nul
+xcopy /D /Q /Y "$(OPENCV_HOME)$(OPENCV_PLATFORM_PATH)\vc10\bin\*ffmpeg*.dll" "$(OutDir)" >nul
+)</Command> -->
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="OPENCV_HOME">
+      <Value>$(OPENCV_HOME)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
